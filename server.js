@@ -704,10 +704,13 @@ async function checkCameraStatusOnce() {
 }
 
 // Jalankan cek status setiap 1 menit
-setInterval(checkCameraStatusOnce, 1 * 60 * 1000);
+if (process.env.ENABLE_PING === 'true') {
+    // Jalankan cek status setiap 1 menit
+    setInterval(checkCameraStatusOnce, 1 * 60 * 1000);
 
-// (Opsional) jalankan sekali saat server baru start
-checkCameraStatusOnce();
+    // (Opsional) jalankan sekali saat server baru start
+    checkCameraStatusOnce();
+}
 
 // =========================
 //  API UNTUK DASHBOARD
