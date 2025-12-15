@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMIP CCTV - Settings</title>
+
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap">
+    <link rel="icon" type="image/x-icon" href="lib/favicon.ico">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <img src="lib/logo-imip.png" alt="IMIP Logo">
+            </div>
+            <div class="logo-text">IMIP CCTV</div>
+        </div>
+        <nav>
+            <a href="/dashboard">Home</a>
+            <a href="/cameras.html">Daftar Kamera</a>
+            <a href="/live.html">Live View</a>
+            <a href="/rekap.html">Rekap Lokasi</a>
+            <a href="/settings.html" id="settingsLink">Settings</a>
+        </nav>
+        <button id="logoutButton" class="logout-btn">Logout</button>
+    </header>
+
+    <main class="content-area">
+        <div class="hero-logo-bg">
+            <img src="lib/logo-imip-full.png" alt="IMIP Logo Full">
+        </div>
+
+        <h1>Settings</h1>
+        <p id="welcomeMessage">Memuat data pengguna...</p>
+        <p class="dashboard-subtitle">
+            Kelola data kamera CCTV, lakukan import dari file Excel yang sudah disiapkan.
+        </p>
+
+        <section class="settings-section">
+            <h2>Import Data Kamera dari Excel</h2>
+            <p class="settings-description">
+                Upload file Excel (<code>.xlsx</code>) dengan struktur kolom:
+                <strong>CCTV, Type Device, IP Address, OSD/SSID, Latitude, Longitude, Area, MAC Address</strong>.
+                Seluruh data di tabel <code>cameras</code> akan diganti dengan isi file ini.
+            </p>
+
+            <div class="table-container" style="padding: 16px 18px; border-radius: 12px;">
+                <form id="importForm">
+                    <input type="file" id="excelFile" name="file" accept=".xlsx,.xls" required>
+                    <button type="submit" class="btn-primary">
+                        Import Data Kamera
+                    </button>
+                </form>
+
+                <p id="importStatus" class="settings-status"></p>
+            </div>
+        </section>
+    </main>
+
+    <script src="Script/script.js"></script>
+</body>
+</html>

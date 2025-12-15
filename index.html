@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMIP CCTV - Sign In</title>
+    <link rel="icon" type="image/x-icon" href="lib/favicon.ico">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'imip-bg': '#050816',
+                        'imip-card': '#111827',
+                        'imip-primary': '#7c5cff',
+                        'imip-primary-soft': '#ec4899',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font & custom CSS -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex min-h-screen items-center justify-center px-4 sm:px-6">
+
+    <!-- Kartu login utama -->
+    <div class="flex w-full max-w-5xl flex-col overflow-hidden rounded-[26px] border border-slate-700/70 bg-slate-900/80 shadow-[0_30px_90px_rgba(15,23,42,0.95)] md:flex-row">
+
+        <!-- PANEL KIRI: FORM LOGIN -->
+        <div class="flex w-full flex-col justify-between bg-slate-900 px-8 py-8 md:w-[55%]">
+
+            <!-- Header kecil (brand) -->
+            <div class="mb-6 flex items-center gap-2">
+                <div class="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-slate-700 bg-slate-800">
+                    <img src="lib/logo-imip.png" alt="IMIP Logo" class="max-h-full max-w-full object-contain">
+                </div>
+                <span class="tracking-[0.3em] text-xs font-semibold uppercase text-slate-400">
+                    IMIP CCTV
+                </span>
+            </div>
+
+            <!-- FORM -->
+            <form id="loginForm" class="login-form">
+                <h2 class="mb-1 text-2xl font-semibold text-slate-50">
+                    Masuk ke sistem
+                    <span class="from-imip-primary to-imip-primary-soft ml-1 inline-block h-2 w-2 rounded-full bg-gradient-to-r align-middle"></span>
+                </h2>
+                <p class="mb-7 text-sm text-slate-300">
+                    Silakan masukkan akun Anda untuk mengakses dashboard monitoring CCTV.
+                </p>
+
+                <!-- Username -->
+                <label for="username"
+                       class="tracking-[0.12em] mb-1 block uppercase text-[0.75rem] text-slate-400">
+                    Username
+                </label>
+                <input id="username" type="text" required
+                       placeholder="Masukkan username"
+                       class="mb-4 w-full rounded-xl border border-slate-700 bg-black px-3 py-2.5 text-sm text-slate-50 outline-none transition focus:border-imip-primary focus:ring-imip-primary/70 focus:ring-2" />
+
+                <!-- Password -->
+                <label for="password"
+                       class="tracking-[0.12em] mb-1 block uppercase text-[0.75rem] text-slate-400">
+                    Password
+                </label>
+                <input id="password" type="password" required
+                       placeholder="********"
+                       class="mb-3 w-full rounded-xl border border-slate-700 bg-black px-3 py-2.5 text-sm text-slate-50 outline-none transition focus:border-imip-primary focus:ring-imip-primary/70 focus:ring-2" />
+
+               
+                <!-- Tombol Login -->
+                <button type="submit"
+                        class="from-imip-primary to-imip-primary-soft w-full rounded-full bg-gradient-to-r px-4 py-2.5 text-sm font-semibold text-slate-50 shadow-[0_10px_30px_rgba(124,92,255,0.65)] transition hover:brightness-105 active:scale-[0.99]">
+                    Login
+                </button>
+            </form>
+
+            <!-- Info kontak -->
+            <div class="mt-7 border-t border-slate-800 pt-4 text-[0.8rem] text-slate-400">
+                <p>Jika mengalami kendala login,</p>
+                <p>silakan hubungi tim IT IMIP CCTV.</p>
+            </div>
+
+            <!-- Footer kecil -->
+            <div class="mt-3 text-right text-[0.7rem] text-slate-500">
+                &copy; 2025 INFORMATION TECHNOLOGY - _axsct
+            </div>
+        </div>
+
+        <!-- PANEL KANAN: GAMBAR -->
+        <div class="relative min-h-[260px] w-full bg-slate-800 md:w-[45%]">
+            <img src="lib/background.jpg" alt="CCTV Area"
+                 class="absolute inset-0 h-full w-full object-cover">
+            <!-- Overlay gradient lembut -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+        </div>
+    </div>
+
+    <script src="Script/script.js"></script>
+</body>
+</html>

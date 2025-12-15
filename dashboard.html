@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMIP CCTV - Dashboard</title>
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap"
+    />
+    <link rel="icon" type="image/x-icon" href="lib/favicon.ico" />
+
+    <!-- Chart.js untuk grafik -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <img src="lib/logo-imip.png" alt="IMIP Logo" />
+        </div>
+        <div class="logo-text">IMIP CCTV</div>
+      </div>
+      <nav>
+        <a href="/dashboard">Home</a>
+        <a href="/cameras.html">Daftar Kamera</a>
+        <a href="/live.html">Live View</a>
+        <a href="/rekap.html">Rekap Lokasi</a>
+        <a href="/users.html" id="usersNavLink">Users</a>
+        <a href="/settings.html" id="settingsLink">Settings</a>
+      </nav>
+      <button id="logoutButton" class="logout-btn">Logout</button>
+    </header>
+
+    <main class="content-area">
+      <!-- Logo IMIP Full sebagai watermark -->
+      <div class="hero-logo-bg">
+        <img src="lib/logo-imip-full.png" alt="IMIP Logo Full" />
+      </div>
+
+      <!-- HEADER DASHBOARD -->
+      <section class="dashboard-header">
+        <div class="dashboard-title">
+          <h1>Halo, selamat datang di Dashboard 👋</h1>
+          <p id="welcomeMessage">Memuat data pengguna...</p>
+          <p class="dashboard-subtitle">
+            Pantau status jaringan & kamera CCTV IMIP.
+          </p>
+        </div>
+        <div class="dashboard-pill">
+          <span class="pill-label">Status jaringan</span>
+          <span id="headerNetworkStatus" class="pill-value">-</span>
+        </div>
+      </section>
+
+      <!-- KARTU METRIK -->
+      <div class="metric-cards">
+        <div class="metric-card" id="totalCameras">
+          <div class="metric-icon metric-icon-cameras">
+            <i class="bx bx-cctv"></i>
+          </div>
+          <div class="metric-main"></div>
+          <p class="metric-label">Total Kamera (Online / Total)</p>
+
+          <div class="metric-value-row"></div>
+          <p class="metric-value" id="totalCamerasValue">0 / 0</p>
+
+          <div class="metric-mini-donut">
+            <canvas id="totalCamerasDonut"></canvas>
+            <span id="totalCamerasPercent">0%</span>
+          </div>
+        </div>
+
+        <!-- IP Usage -->
+        <div class="metric-card" id="ipUsage">
+          <div class="metric-icon metric-icon-ip">
+            <i class="bx bx-network-chart"></i>
+          </div>
+          <div class="metric-main">
+            <p class="metric-label">Alamat IP Terpakai</p>
+            <p class="ip-range-info" id="ipRangeInfo">Range: ---</p>
+            <p class="metric-value" id="ipUsageValue">---</p>
+            <p class="ip-remaining-text" id="ipRemainingText">
+              Sisa: --- IP (Prefix: ---)
+            </p>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Jaringan -->
+        <div class="metric-card" id="networkStatus">
+          <div class="metric-icon metric-icon-status">
+            <i class="bx bx-wifi"></i>
+          </div>
+          <div class="metric-main">
+            <p class="metric-label">Status Jaringan</p>
+            <p class="metric-value">---</p>
+          </div>
+        </div>
+
+        <!-- Kamera Offline -->
+        <div class="metric-card" id="offlineCameras">
+          <div class="metric-icon metric-icon-offline">
+            <i class="bx bx-toggle-left"></i>
+          </div>
+          <div class="metric-main">
+            <p class="metric-label">Kamera Offline</p>
+            <p class="metric-value">0</p>
+            <p class="metric-subtext" id="offlinePercent">0% dari total</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AKSI CEPAT -->
+      <section class="quick-actions">
+        <h2>Aksi Cepat</h2>
+        <div class="action-buttons">
+          <button class="action-btn" id="liveViewBtn">
+            <i class="bx bx-camera-movie"> </i> Live View
+          </button>
+          <button class="action-btn">
+            <i class="bx bx-search-alt-2"></i> Cari Rekaman
+          </button>
+          <button class="action-btn" id="notificationsBtn">
+            <i class="bx bx-bell"></i> Notifikasi (<span id="notifCount">0</span
+            >)
+          </button>
+        </div>
+      </section>
+
+      <!-- GRAFIK -->
+      <section class="chart-section">
+        <div class="chart-card">
+          <h2>Camera Distribution by Location</h2>
+          <canvas id="areaChart"></canvas>
+
+          <!-- ️Ringkasan Top Area -->
+          <div class="top-areas" id="topAreas"></div>
+        </div>
+        <div class="chart-card">
+          <h2>Daily Offline Camera Trend</h2>
+          <canvas id="offlineTrendChart"></canvas>
+        </div>
+      </section>
+
+      <!-- PETA LOKASI KAMERA -->
+      <section class="map-section">
+        <div class="map-grid">
+          <!-- KIRI: PETA -->
+          <div class="chart-card">
+            <h2>Camera Location Map</h2>
+            <div id="cameraMap"></div>
+          </div>
+
+          <!-- KANAN: TOP KAMERA OFFLINE LAMA -->
+          <div class="chart-card">
+            <h2>Old Offline Camera</h2>
+            <div class="offline-top-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nama</th>
+                    <th>Lokasi</th>
+                    <th>IP</th>
+                    <th>Offline</th>
+                  </tr>
+                </thead>
+                <tbody id="topOfflineBody">
+                  <tr>
+                    <td colspan="4" class="text-center">Memuat data...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- MODAL NOTIFIKASI OFFLINE -->
+    <div id="modalBackdrop" class="modal-backdrop hidden"></div>
+
+    <div id="notificationsModal" class="notifications-modal hidden">
+      <div class="modal-header">
+        <h2>Kamera Offline Lama</h2>
+        <button id="closeNotificationsBtn" class="modal-close-btn">
+          <i class="bx bx-x"></i>
+        </button>
+      </div>
+      <p id="notificationsSubtitle" class="modal-subtitle">Memuat data...</p>
+
+      <div class="modal-table-container">
+        <table class="notifications-table">
+          <thead>
+            <tr>
+              <th>Nama Kamera/Device</th>
+              <th>Lokasi</th>
+              <th>IP Address</th>
+              <th>Offline (menit)</th>
+            </tr>
+          </thead>
+          <tbody id="notificationsBody">
+            <tr>
+              <td colspan="4" class="text-center">
+                Tidak ada kamera offline melewati ambang waktu.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="Script/script.js"></script>
+  </body>
+</html>

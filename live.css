@@ -1,0 +1,279 @@
+/* =============================
+   LIVE VIEW CCTV - UI KHUSUS
+   ============================= */
+
+/* Search bar di halaman live */
+.live-search-bar {
+  margin: 4px 0 10px;
+}
+
+.live-search-bar input {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: var(--text);
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.live-search-bar input::placeholder {
+  color: var(--muted);
+}
+
+/* Layout 2 kolom: kiri tabel, kanan player */
+.live-layout {
+  margin-top: 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Kolom kiri (~65%) dan kanan (~35%) */
+.live-left {
+  flex: 1.4;
+  min-width: 0;
+}
+
+.live-right {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Di layar kecil: jadi 1 kolom (stack) */
+@media (max-width: 900px) {
+  .live-layout {
+    flex-direction: column;
+  }
+
+  .live-right {
+    order: -1; /* player di atas tabel di HP */
+  }
+}
+
+/* Judul section live */
+.live-section h2,
+.live-player-section h2 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+/* ===== TABEL LIVE ===== */
+#liveTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.87rem;
+}
+
+#liveTable thead {
+  background: linear-gradient(
+    to right,
+    rgba(15, 23, 42, 0.98),
+    rgba(15, 23, 42, 0.92)
+  );
+}
+
+#liveTable thead th {
+  padding: 10px 14px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+  text-align: left;
+}
+
+/* ===== SORTING HEADER DI TABEL LIVE ===== */
+
+#liveTable thead th.live-sortable {
+  cursor: pointer;
+  position: relative;
+  padding-right: 22px; /* kasih ruang untuk panah di kanan */
+}
+
+/* Default: tidak ada panah (biar tidak ramai) */
+#liveTable thead th.live-sortable::after {
+  content: "";
+}
+
+/* Saat sorted naik (A-Z / IP kecil->besar) */
+#liveTable thead th.live-sortable.sorted-asc::after {
+  content: "▲";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.6rem;
+  color: #a5b4fc;
+}
+
+/* Saat sorted turun (Z-A / IP besar->kecil) */
+#liveTable thead th.live-sortable.sorted-desc::after {
+  content: "▼";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.6rem;
+  color: #a5b4fc;
+}
+/* Kolom aksi rata tengah */
+#liveTable thead th:last-child,
+#liveTable tbody td:last-child {
+  text-align: left;
+}
+
+#liveTable tbody tr:nth-child(odd) {
+  background: rgba(15, 23, 42, 0.96);
+}
+
+#liveTable tbody tr:nth-child(even) {
+  background: rgba(15, 23, 42, 0.9);
+}
+
+#liveTable tbody td {
+  padding: 9px 14px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.95);
+}
+
+/* Kecilkan tombol Live di tabel */
+.live-table-container .camera-action-btn {
+  padding: 4px 10px;
+  font-size: 0.78rem;
+}
+
+/* ===== PLAYER LIVE ===== */
+
+/* Kartu player (di dalam table-container) */
+.live-player-card {
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+/* Video mengikuti lebar card, tinggi proporsional */
+#livePlayer {
+  width: 100%;
+  max-height: 380px;
+  border-radius: 10px;
+  background: #000;
+  display: block;
+}
+
+/* Status teks di bawah player */
+#liveStatus {
+  margin-top: 6px;
+}
+
+
+/* Header grup lokasi di tabel live */
+.live-group-row td {
+  padding: 6px 12px;
+  background: rgba(15, 23, 42, 0.98);
+  border-bottom: 1px solid rgba(55, 65, 81, 0.9);
+  padding-left: 14px;
+
+}
+
+.live-group-title {
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: left;
+  color: #95f23d;
+}
+
+/* ===== PAGINATION LIVE VIEW ===== */
+
+.live-pagination {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.live-page-info {
+  flex: 1;
+  text-align: center;
+}
+
+.live-page-btn {
+  border-radius: 999px;
+  padding: 4px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+}
+
+.live-page-btn:hover:not(:disabled) {
+  background: rgba(15, 23, 42, 1);
+  border-color: var(--primary);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.live-page-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Info kamera aktif di panel player */
+.live-active-info {
+  margin-bottom: 8px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.live-active-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.live-active-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.live-active-location {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+/* =============================
+   PLAYER FIXED DI KANAN (DESKTOP)
+   ============================= */
+
+@media (min-width: 900px) {
+  /* Sisakan ruang di kanan untuk panel player */
+  .live-layout {
+    padding-right: 50px; /* sesuaikan dengan lebar panel */
+  } 
+   /* Panel Player Live menempel di kanan, sejajar dengan judul "Daftar Kamera" */
+  .live-player-section {
+    position: fixed;
+    top:235px;       /* posisi vertikal (kira-kira sejajar h2 Daftar Kamera) */
+    right:180px;      /* jarak dari sisi kanan, sama dengan padding content-area */
+    width: 500px;     /* lebar panel */
+    max-width: 32vw;  /* tidak lebih dari 32% lebar layar */
+    z-index: 20;
+  }
+}
+
+/* Di mobile, tetap normal (tidak fixed) */
+/* Di mobile, tetap normal (tidak fixed) */
+@media (max-width: 900px) {
+  .live-player-card {
+    position: static;
+  }
+
+  .live-player-section {
+    position: static;
+    margin-bottom: 10px;
+  }
+}

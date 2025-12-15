@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMIP CCTV - Daftar Kamera</title>
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap"
+    />
+    <link rel="icon" type="image/x-icon" href="lib/favicon.ico" />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <img src="lib/logo-imip.png" alt="IMIP Logo" />
+        </div>
+        <div class="logo-text">IMIP CCTV</div>
+      </div>
+      <nav>
+        <a href="/dashboard">Home</a>
+        <a href="/cameras.html">Daftar Kamera</a>
+        <a href="/live.html">Live View</a>
+        <a href="/rekap.html">Rekap Lokasi</a>
+        <a href="/users.html" id="usersNavLink">Users</a>
+        <a href="/settings.html" id="settingsLink">Settings</a>
+      </nav>
+      <button id="logoutButton" class="logout-btn">Logout</button>
+    </header>
+
+    <main class="content-area">
+      <div class="hero-logo-bg">
+        <img src="lib/logo-imip-full.png" alt="IMIP Logo Full" />
+      </div>
+
+      <h1>Daftar Kamera</h1>
+      <p id="welcomeMessage">Memuat data pengguna...</p>
+      <p class="dashboard-subtitle">
+        Lihat seluruh kamera CCTV yang terdaftar, status, lokasi, IP, dan MAC
+        Address.
+      </p>
+
+      <section class="camera-list-section">
+        <!-- PANEL DETAIL KAMERA -->
+        <section id="cameraDetailSection" class="camera-detail-section hidden">
+          <div class="camera-detail-card">
+            <div class="camera-detail-left">
+              <div class="camera-type-label" id="cameraDetailTypeLabel">
+                Type Kamera
+              </div>
+              <div class="camera-image-wrapper">
+                <img
+                  id="cameraDetailImage"
+                  src="lib/logo-imip-full.png"
+                  alt="Visual Kamera"
+                />
+              </div>
+            </div>
+            <div class="camera-detail-right">
+              <div class="camera-detail-header">
+                <h3 id="cameraDetailName">Nama Kamera/Device</h3>
+                <div class="camera-detail-actions">
+                  <span id="cameraDetailStatus" class="status-badge offline"
+                    >OFFLINE</span
+                  >
+
+                  <!-- TOMBOL EDIT DI PANEL DETAIL -->
+                  <button
+                    id="editCameraBtn"
+                    class="icon-btn"
+                    title="Edit kamera ini"
+                  >
+                    <i class="bx bx-edit"></i>
+                  </button>
+
+                  <!-- TOMBOL DELETE DI PANEL DETAIL -->
+                  <button
+                    id="deleteCameraBtn"
+                    class="icon-btn danger"
+                    title="Hapus kamera ini"
+                  >
+                    <i class="bx bx-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <p class="camera-detail-location" id="cameraDetailLocation">
+                Lokasi: -
+              </p>
+
+              <div class="camera-detail-grid">
+                <div>
+                  <span>IP Address</span>
+                  <strong id="cameraDetailIP">-</strong>
+                </div>
+                <div>
+                  <span>MAC Address</span>
+                  <strong id="cameraDetailMAC">-</strong>
+                </div>
+                <div>
+                  <span>Brand / Type</span>
+                  <strong id="cameraDetailBrandType">-</strong>
+                </div>
+                <div>
+                  <span>Koordinat</span>
+                  <strong id="cameraDetailCoords">-</strong>
+                </div>
+              </div>
+
+              <div class="camera-detail-history">
+                <p id="cameraDetailLastSeen">Terakhir online: -</p>
+                <p id="cameraDetailLastCheck">Terakhir dicek: -</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BAR AKSI (TAMBAH & EXPORT) -->
+        <div class="camera-actions-bar">
+          <div class="camera-actions-left"></div>
+          <div class="camera-actions-right">
+            <button
+              type="button"
+              id="addCameraBtn"
+              class="camera-action-btn primary"
+            >
+              <i class="bx bx-plus"></i> Tambah Kamera
+            </button>
+            <button type="button" id="exportBtn" class="camera-action-btn">
+              <i class="bx bx-export"></i> Export Excel
+            </button>
+          </div>
+        </div>
+
+        <!-- FILTER -->
+        <div class="camera-filters">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Cari (Nama / IP / Lokasi / Type / MAC)"
+          />
+
+          <select id="statusFilter">
+            <option value="all">Status: Semua</option>
+            <option value="online">Online</option>
+            <option value="offline">Offline</option>
+          </select>
+
+          <select id="areaFilter">
+            <option value="all">Lokasi: Semua</option>
+          </select>
+
+          <button type="button" id="resetFiltersBtn">Reset</button>
+        </div>
+
+        <!-- TABEL KAMERA -->
+        <div class="table-container">
+          <table id="cameraTable">
+            <thead>
+              <tr>
+                <th>Brand/CCTV</th>
+                <th>Type Kamera/Device</th>
+                <th>Nama Kamera/Device</th>
+                <th>Lokasi</th>
+                <th>Alamat IP</th>
+                <th>Koordinat</th>
+                <th>Status</th>
+                <th>Mac Address</th>
+              </tr>
+            </thead>
+            <tbody id="cameraTableBody">
+              <tr>
+                <td colspan="8" class="text-center">Memuat data kamera...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- MODAL TAMBAH KAMERA -->
+    <div id="addCameraBackdrop" class="modal-backdrop hidden"></div>
+
+    <div id="addCameraModal" class="notifications-modal hidden">
+      <div class="modal-header">
+        <h2>Tambah Kamera Baru</h2>
+        <button id="closeAddCameraBtn" class="modal-close-btn">
+          <i class="bx bx-x"></i>
+        </button>
+      </div>
+      <p class="modal-subtitle">
+        Isi informasi kamera baru. Field dengan tanda * wajib diisi.
+      </p>
+
+      <form id="addCameraForm" class="add-camera-form">
+        <div class="add-camera-grid">
+          <div>
+            <label for="addCctvBrand">Brand / CCTV</label>
+            <input type="text" id="addCctvBrand" placeholder="HIKVISION" />
+          </div>
+          <div>
+            <label for="addType">Type Device *</label>
+            <input type="text" id="addType" required placeholder="DS-2CD..." />
+          </div>
+          <div>
+            <label for="addName">Nama Kamera/Device *</label>
+            <input type="text" id="addName" required placeholder="Nama / OSD" />
+          </div>
+          <div>
+            <label for="addArea">Area / Lokasi *</label>
+            <input
+              type="text"
+              id="addArea"
+              required
+              placeholder="Area / Lokasi"
+            />
+          </div>
+          <div>
+            <label for="addIP">IP Address</label>
+            <input type="text" id="addIP" placeholder="10.xx.xx.xx" />
+          </div>
+          <div>
+            <label for="addMAC">MAC Address</label>
+            <input type="text" id="addMAC" placeholder="aa:bb:cc:dd:ee:ff" />
+          </div>
+          <div>
+            <label for="addLat">Latitude</label>
+            <input type="text" id="addLat" placeholder="-2.82..." />
+          </div>
+          <div>
+            <label for="addLon">Longitude</label>
+            <input type="text" id="addLon" placeholder="122.15..." />
+          </div>
+        </div>
+
+        <p
+          id="addCameraStatus"
+          class="settings-status"
+          style="margin-top: 8px"
+        ></p>
+
+        <div class="add-camera-actions">
+          <button type="button" id="addCameraCancel" class="camera-action-btn">
+            Batal
+          </button>
+          <button type="submit" class="btn-primary">Simpan Kamera</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- MODAL EDIT KAMERA -->
+    <div id="editCameraBackdrop" class="modal-backdrop hidden"></div>
+
+    <div id="editCameraModal" class="notifications-modal hidden">
+      <div class="modal-header">
+        <h2>Edit Kamera</h2>
+        <button id="closeEditCameraBtn" class="modal-close-btn">
+          <i class="bx bx-x"></i>
+        </button>
+      </div>
+      <p class="modal-subtitle">
+        Ubah informasi kamera lalu simpan. Field dengan tanda * wajib diisi.
+      </p>
+
+      <form id="editCameraForm" class="add-camera-form">
+        <div class="add-camera-grid">
+          <div>
+            <label for="editCctvBrand">Brand / CCTV</label>
+            <input type="text" id="editCctvBrand" placeholder="HIKVISION" />
+          </div>
+          <div>
+            <label for="editType">Type Device *</label>
+            <input type="text" id="editType" required placeholder="DS-2CD..." />
+          </div>
+          <div>
+            <label for="editName">Nama Kamera/Device *</label>
+            <input
+              type="text"
+              id="editName"
+              required
+              placeholder="Nama / OSD"
+            />
+          </div>
+          <div>
+            <label for="editArea">Area / Lokasi *</label>
+            <input
+              type="text"
+              id="editArea"
+              required
+              placeholder="Area / Lokasi"
+            />
+          </div>
+          <div>
+            <label for="editIP">IP Address</label>
+            <input type="text" id="editIP" placeholder="10.xx.xx.xx" />
+          </div>
+          <div>
+            <label for="editMAC">MAC Address</label>
+            <input type="text" id="editMAC" placeholder="aa:bb:cc:dd:ee:ff" />
+          </div>
+          <div>
+            <label for="editLat">Latitude</label>
+            <input type="text" id="editLat" placeholder="-2.82..." />
+          </div>
+          <div>
+            <label for="editLon">Longitude</label>
+            <input type="text" id="editLon" placeholder="122.15..." />
+          </div>
+        </div>
+
+        <p
+          id="editCameraStatus"
+          class="settings-status"
+          style="margin-top: 8px"
+        ></p>
+
+        <div class="add-camera-actions">
+          <button type="button" id="editCameraCancel" class="camera-action-btn">
+            Batal
+          </button>
+          <button type="submit" class="btn-primary">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="Script/script.js"></script>
+  </body>
+</html>

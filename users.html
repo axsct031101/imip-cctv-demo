@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMIP CCTV - Kelola User</title>
+
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap">
+    <link rel="icon" type="image/x-icon" href="lib/favicon.ico">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <img src="lib/logo-imip.png" alt="IMIP Logo">
+            </div>
+            <div class="logo-text">IMIP CCTV</div>
+        </div>
+        <nav>
+            <a href="/dashboard">Home</a>
+            <a href="/cameras.html">Daftar Kamera</a>
+            <a href="/live.html">Live View</a>
+            <a href="/rekap.html">Rekap Lokasi</a>
+            <a href="/users.html" id="usersNavLink">Users</a>
+            <a href="/settings.html" id="settingsLink">Settings</a>
+        </nav>
+        <button id="logoutButton" class="logout-btn">Logout</button>
+    </header>
+
+    <main class="content-area">
+        <div class="hero-logo-bg">
+            <img src="lib/logo-imip-full.png" alt="IMIP Logo Full">
+        </div>
+
+        <h1>Kelola User</h1>
+        <p id="welcomeMessage">Memuat data pengguna...</p>
+        <p class="dashboard-subtitle">
+            Tambah, lihat, dan hapus akun user yang dapat mengakses sistem IMIP CCTV.
+        </p>
+
+        <!-- FORM TAMBAH USER -->
+        <section class="settings-section">
+            <h2>Tambah User Baru</h2>
+            <p class="settings-description">
+                Hanya administrator yang dapat menambah user. Password disimpan dalam bentuk hash (bcrypt).
+            </p>
+
+            <div class="table-container" style="padding: 16px 18px; border-radius: 12px;">
+                <form id="addUserForm" class="add-user-form">
+                    <div class="user-form-grid">
+                        <div>
+                            <label for="addUsername">Username *</label>
+                            <input type="text" id="addUsername" required placeholder="username">
+                        </div>
+                        <div>
+                            <label for="addFullname">Nama Lengkap</label>
+                            <input type="text" id="addFullname" placeholder="Nama User">
+                        </div>
+                        <div>
+                            <label for="addPassword">Password *</label>
+                            <input type="password" id="addPassword" required placeholder="minimal 6 karakter">
+                        </div>
+                        <div>
+                            <label for="addRole">Role *</label>
+                            <select id="addRole">
+                                <option value="viewer">viewer</option>
+                                <option value="administrator">administrator</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p id="addUserStatus" class="settings-status" style="margin-top:8px;"></p>
+
+                    <div class="add-camera-actions">
+                        <button type="submit" class="btn-primary">
+                            Simpan User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- TABEL USER -->
+        <section class="area-summary-section">
+            <h2>Daftar User</h2>
+            <div class="table-container">
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Nama Lengkap</th>
+                            <th>Role</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="4" class="text-center">Memuat daftar user...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="Script/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMIP CCTV - Live View</title>
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap"
+    />
+    <link rel="icon" type="image/x-icon" href="lib/favicon.ico" />
+
+    <!-- tema utama dashboard -->
+    <link rel="stylesheet" href="dashboard.css" />
+    <!-- style khusus halaman live -->
+    <link rel="stylesheet" href="live.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <img src="lib/logo-imip.png" alt="IMIP Logo" />
+        </div>
+        <div class="logo-text">IMIP CCTV</div>
+      </div>
+      <nav>
+        <a href="/dashboard">Home</a>
+        <a href="/cameras.html">Daftar Kamera</a>
+        <a href="#">Live View</a>
+        <a href="/rekap.html">Rekap Lokasi</a>
+        <a href="/users.html" id="usersNavLink">Users</a>
+        <a href="/settings.html" id="settingsLink">Settings</a>
+      </nav>
+      <button id="logoutButton" class="logout-btn">Logout</button>
+    </header>
+
+    <main class="content-area">
+      <div class="hero-logo-bg">
+        <img src="lib/logo-imip-full.png" alt="IMIP Logo Full" />
+      </div>
+
+      <h1>Live View CCTV</h1>
+      <p id="welcomeMessage">Memuat data pengguna...</p>
+      <p class="dashboard-subtitle">
+        Pilih kamera lalu klik tombol <strong>Live</strong> untuk menampilkan
+        stream di panel kanan.
+      </p>
+
+      <!-- LAYOUT 2 KOLOM: KIRI TABEL, KANAN PLAYER -->
+      <section class="live-layout">
+        <!-- KIRI: TABEL KAMERA -->
+        <div class="live-left">
+          <section class="area-summary-section live-section">
+            <h2>Daftar Kamera</h2>
+
+            <!-- BAR SEARCH LIVE -->
+            <div class="live-search-bar">
+              <input
+                type="text"
+                id="liveSearchInput"
+                placeholder="Cari (Nama / IP / Lokasi)"
+              />
+            </div>
+            <div class="table-container live-table-container">
+              <table id="liveTable">
+                <thead>
+                  <tr>
+                    <th data-sort="name" class="live-sortable">Nama Kamera</th>
+                    <th>Lokasi</th>
+                    <th data-sort="ip" class="live-sortable">IP Address</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="liveTableBody">
+                  <tr>
+                    <td colspan="4" class="text-center">
+                      Memuat data kamera...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="live-pagination">
+              <button id="livePrevPage" class="live-page-btn">
+                Sebelumnya
+              </button>
+              <span id="livePageInfo" class="live-page-info">Halaman 1</span>
+              <button id="liveNextPage" class="live-page-btn">
+                Berikutnya
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <!-- KANAN: PLAYER -->
+        <div class="live-right">
+          <section class="live-player-section">
+            <h2>Player Live</h2>
+            <div class="table-container">
+              <div class="live-player-card">
+                <!-- INFO KAMERA AKTIF -->
+                <div class="live-active-info">
+                  <div class="live-active-label">Sedang menampilkan:</div>
+                  <div class="live-active-name" id="liveActiveName">
+                    Belum ada kamera aktif
+                  </div>
+                  <div
+                    class="live-active-location"
+                    id="liveActiveLocation"
+                  ></div>
+                </div>
+
+                <!-- VIDEO PLAYER -->
+                <video
+                  id="livePlayer"
+                  controls
+                  autoplay
+                  muted
+                  playsinline
+                ></video>
+
+                <!-- STATUS STREAM -->
+                <p id="liveStatus" class="settings-status">
+                  Pilih kamera untuk memulai live.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- HLS.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="Script/script.js"></script>
+  </body>
+</html>

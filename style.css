@@ -1,0 +1,196 @@
+/* Gunakan font Jost di seluruh halaman */
+body {
+    font-family: 'Jost', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden; /* agar blur tidak muncul garis di tepi */
+}
+
+/* Background: gambar sama, diblur + digelapkan */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("lib/background.jpg"); /* ganti ke .png jika file kamu PNG */
+    background-size: cover;
+    background-position: center;
+    filter: blur(1.9px) brightness(2);  /* blur + gelap */
+    transform: scale(1.05);             /* sedikit diperbesar supaya tepi blur tidak kelihatan */
+    z-index: -2;
+}
+
+/* Overlay tambahan supaya lebih �matte� dan tidak terlalu kontras */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at top, rgba(15,23,42,0.75), transparent 60%),
+        radial-gradient(circle at bottom, rgba(15,23,42,0.95), #020617);
+    opacity: 0.9;
+    z-index: -1;
+}
+/* Panel kiri: gambar full dan overlay */
+.left-panel {
+    position: relative;
+    overflow: hidden;
+}
+
+.background-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9);
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    padding: 20px 22px 18px;
+    background: linear-gradient( to bottom right, rgba(15,23,42,0.85), rgba(15,23,42,0.9) );
+}
+
+.logo-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Label & input */
+.login-form label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(148,163,184,0.9);
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background: #1f1a35;
+    color: #f9fafb;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+}
+
+.login-form input:focus {
+    border-color: #7c5cff;
+    background: #231f3b;
+    box-shadow: 0 0 0 1px rgba(124, 92, 255, 0.6);
+}
+
+.contact-info {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(31,41,55,0.9);
+    font-size: 0.8rem;
+    color: rgba(156,163,175,0.9);
+}
+
+    .contact-info p {
+        margin: 0;
+    }
+
+
+    /* ===== SYSTEM MODAL (LOGIN / LOGOUT) ===== */
+
+.sys-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.sys-modal-card {
+  width: min(360px, 90vw);
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
+  padding: 16px 18px 14px;
+  display: flex;
+  gap: 12px;
+}
+
+.sys-modal-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sys-modal-icon.loading {
+  background: rgba(37, 99, 235, 0.18);
+  border: 1px solid rgba(129, 140, 248, 0.9);
+}
+
+.sys-modal-icon.success {
+  background: rgba(22, 163, 74, 0.18);
+  border: 1px solid rgba(74, 222, 128, 0.9);
+}
+
+.sys-modal-icon.error {
+  background: rgba(248, 113, 113, 0.18);
+  border: 1px solid rgba(248, 113, 113, 0.9);
+}
+
+.sys-modal-spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 3px solid rgba(129, 140, 248, 0.25);
+  border-top-color: #60a5fa;
+  animation: sysSpin 0.9s linear infinite;
+}
+
+@keyframes sysSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sys-modal-check,
+.sys-modal-error-icon {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.sys-modal-check {
+  color: #bbf7d0;
+}
+
+.sys-modal-error-icon {
+  color: #fecaca;
+}
+
+.sys-modal-text {
+  flex: 1;
+}
+
+.sys-modal-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin-bottom: 4px;
+}
+
+.sys-modal-message {
+  font-size: 0.8rem;
+  color: #cbd5f5;
+}
