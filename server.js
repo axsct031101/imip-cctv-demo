@@ -704,7 +704,7 @@ async function checkCameraStatusOnce() {
 }
 
 // Jalankan cek status setiap 1 menit
-if (process.env.ENABLE_PING === 'true') {
+if (process.env.ENABLE_PING === 'false') {
     // Jalankan cek status setiap 1 menit
     setInterval(checkCameraStatusOnce, 1 * 60 * 1000);
 
